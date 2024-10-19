@@ -1,61 +1,41 @@
 let balance = 0;
+let verificationCode = ''; // This should come from the backend
 
-// Event listener for signup - add bonus of Ksh 50 upon signup
-document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    const password = document.getElementById('password').value;
+function verifyCode() {
+    const inputCode = document.getElementById('verificationCode').value;
+    if (inputCode === verificationCode) {
+        document.getElementById('verification').classList.add('hidden');
+        document.getElementById('game').classList.remove('hidden');
+    } else {
+        alert('Verification code is incorrect.');
+    }
+}
 
-    // Perform basic validation
-    if (phoneNumber === "" || password === "") {
-        alert("Please fill in all fields.");
+document.getElementById('coin').addEventListener('click', () => {
+    const randomNumber = Math.floor(Math.random() * 51) + 50; // Generates a number between 50 and 100
+    balance += randomNumber;
+    document.getElementById('balanceAmount').innerText = balance;
+    document.getElementById('result').innerText = `Hurray! You have won ${randomNumber}`;
+});
+
+function showWithdrawal() {
+    document.getElementById('withdrawal').classList.remove('hidden');
+}
+
+function processWithdrawal() {
+    const withdrawAmount = Number(document.getElementById('withdrawAmount').value);
+    const mpesaMessage = document.getElementById('mpesaMessage').value;
+
+    if (withdrawAmount > balance) {
+        document.getElementById('withdrawResult').innerText = 'Insufficient balance.';
         return;
     }
 
-    // Simulate successful signup/login and add the bonus
-    alert("Signup/Login successful! You have received a Ksh 50 bonus.");
-    balance = 50;
-    updateBalance();
-    showMainContent();
-});
-
-// Function to update the displayed balance
-function updateBalance() {
-    document.getElementById('userBalance').innerText = balance.toFixed(2);
-}
-
-// Function to handle deposit
-function deposit() {
-    const depositAmount = parseFloat(document.getElementById('depositAmount').value);
-
-    if (isNaN(depositAmount) || depositAmount < 10) {
-        alert("Minimum deposit amount is Ksh 10.");
-    } else {
-        balance += depositAmount;
-        updateBalance();
-        alert(`Deposit of Ksh ${depositAmount} was successful.`);
-        document.getElementById('depositAmount').value = ''; // Clear the input
-    }
-}
-
-// Function to handle withdrawal
-function withdraw() {
-    const withdrawAmount = parseFloat(document.getElementById('withdrawAmount').value);
-
-    if (isNaN(withdrawAmount) || withdrawAmount < 100) {
-        alert("Minimum withdrawal amount is Ksh 100.");
-    } else if (withdrawAmount > balance) {
-        alert("Insufficient balance.");
-    } else {
+    if (mpesaMessage.includes('confirmed, paid to account')) {
         balance -= withdrawAmount;
-        updateBalance();
-        alert(`Withdrawal of Ksh ${withdrawAmount} was successful.`);
-        document.getElementById('withdrawAmount').value = ''; // Clear the input
+        document.getElementById('balanceAmount').innerText = balance;
+        document.getElementById('withdrawResult').innerText = 'Withdrawal successful!';
+    } else {
+        document.getElementById('withdrawResult').innerText = 'Invalid M-Pesa message. Please try again.';
     }
-}
-
-function showMainContent() {
-    document.getElementById('authPage').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('profilePage').style.display = 'none';
-}
+        }
