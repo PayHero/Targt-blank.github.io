@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Main content - hidden until login/signup -->
+    <div id="mainContent" style="display: none;">
+        <header>
+            <div class="profile-section">
+                <img src="https://via.placeholder.com/40" alt="Profile" class="profile-icon" onclick="toggleProfileOptions()">
+                <div class="profile-options" id="profileOptions" style="display: none;">
+                    <button onclick="logout()">Logout</button>
+                    <button onclick="deleteAccount()">Delete Account</button>
+                </div>
+            </div>
+            <div class="wallet-info">
+                <span class="wallet-icon">💰</span>
+                <span id="balance">Balance: 50 Ksh</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="transaction-buttons">
+                <button class="round-btn" onclick="showDeposit()">Deposit</button>
+                <button class="round-btn" onclick="showWithdraw()">Withdraw</button>
+            </div>
+
+            <div class="deposit-form" id="depositForm" style="display: none;">
+                <input type="number" placeholder="Enter deposit amount" id="depositAmount">
+                <button class="round-btn" onclick="deposit()">Deposit Now</button>
+                <div class="loading-bar" id="loadingBar" style="display: none;">
+                    <div class="progress"></div>
+                    <span>Deposit in progress...</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Menu -->
+        <nav class="bottom-menu">
+            <button onclick="navigateTo('home')">🏠 Home</button>
+            <button onclick="showWithdraw()">💸 Withdraw</button>
+            <button onclick="toggleProfileOptions()">👤 Profile</button>
+        </nav>
+    </div>
+
+    <!-- Authentication Modal - visible until signup/login -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <h2 id="authTitle">Sign Up</h2>
+            <input type="text" placeholder="Phone Number (07...)" id="phoneNumber">
+            <input type="password" placeholder="Password" id="password">
+            <button class="round-btn" onclick="handleAuth()">Submit</button>
+            <p id="authSwitch" onclick="toggleAuthMode()">Already have an account? Log in</p>
+            <p id="resetPassword" onclick="showResetPassword()">Forgot password?</p>
+        </div>
+    </div>
+
+    <div id="resetModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Reset Password</h2>
+            <input type="text" placeholder="Phone Number (07...)" id="resetPhoneNumber">
+            <input type="password" placeholder="New Password" id="newPassword">
+            <button class="round-btn" onclick="resetPassword()">Reset</button>
+        </div>
+    </div>
+</body>
+  </html>
