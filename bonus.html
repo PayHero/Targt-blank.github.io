@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonus Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .bonus, .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .bonus:hover, .button:hover {
+            background-color: #0056b3;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .close {
+            background: #007BFF;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Bonus</h2>
+        <button class="bonus" onclick="showBonusModal()">300 Ksh</button>
+        
+        <button class="button" onclick="alert('Coming soon')">Buy Airtime</button>
+        <button class="button" onclick="alert('Coming soon')">Pay bills</button>
+
+        <h2>Withdraw</h2>
+        <button class="button" onclick="showWithdrawModal()">Withdraw</button>
+    </div>
+
+    <!-- Bonus Modal -->
+    <div class="modal" id="bonusModal">
+        <div class="modal-content">
+            <h3>Pay at least 20 Ksh to activate your bonus</h3>
+            <button class="button" onclick="window.location.href='https://app.payhero.co.ke/lipwa/835'">Pay</button>
+            <button class="close" onclick="closeBonusModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <h3>Withdraw</h3>
+            <label for="mpesaNumber">M-Pesa Number:</label>
+            <input type="text" id="mpesaNumber" placeholder="Enter your M-Pesa number" required>
+            
+            <label for="paymentMessage">Payment Message:</label>
+            <input type="text" id="paymentMessage" placeholder="Enter the M-Pesa payment message" required>
+            
+            <button class="button" onclick="submitWithdraw()">Submit</button>
+            <button class="close" onclick="closeWithdrawModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showBonusModal() {
+            document.getElementById('bonusModal').style.display = 'flex';
+        }
+
+        function closeBonusModal() {
+            document.getElementById('bonusModal').style.display = 'none';
+        }
+
+        function showWithdrawModal() {
+            document.getElementById('withdrawModal').style.display = 'flex';
+        }
+
+        function closeWithdrawModal() {
+            document.getElementById('withdrawModal').style.display = 'none';
+        }
+
+        function submitWithdraw() {
+            const mpesaNumber = document.getElementById('mpesaNumber').value;
+            const paymentMessage = document.getElementById('paymentMessage').value;
+
+            if (!mpesaNumber || !paymentMessage) {
+                alert('Please fill in all the fields');
+            } else {
+                alert(`Withdraw request submitted:\nM-Pesa Number: ${mpesaNumber}\nPayment Message: ${paymentMessage}`);
+                closeWithdrawModal();
+            }
+        }
+    </script>
+</body>
+  </html>
